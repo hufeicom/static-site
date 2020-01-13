@@ -11,4 +11,5 @@ console.log('loaded!!!!!')
 let s = require('./test.html');
 
 
-// console.log(s)
+document.body.innerHTML = s;
+console.log(111)

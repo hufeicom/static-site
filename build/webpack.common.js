@@ -23,16 +23,25 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.m?js$/,
+                test: /\.tsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
-                    loader: 'babel-loader',
+                    loader: 'ts-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        // appendsuffix
                     }
-
                 }
             },
+            // {
+            //     test: /\.m?js$/,
+            //     exclude: /(node_modules|bower_components)/,
+            //     use: {
+            //         loader: 'babel-loader',
+            //         options: {
+            //             presets: ['@babel/preset-env']
+            //         }
+            //     }
+            // },
             {
                 test: /\.scss$/,
                 use: ["style-loader", "css-loader", "sass-loader"]
@@ -74,7 +83,7 @@ const config = {
 module.exports=config
 
 function getEntries() {
-    const root = path.resolve(__dirname, '../page');
+    const root = path.resolve(__dirname, '../src/page');
     const r = glob.sync('./**/*.entry.js', {
         root
     })
@@ -87,8 +96,8 @@ function getEntries() {
             name: name[1],
             entry: path.resolve(__dirname, '../',p),
             page: {
-                filename: p.replace(/entry\.js$/, 'html'),
-                template: path.resolve(__dirname, '../', p.replace( /entry\.js$/, 'html')),
+                filename: p.replace(/entry\.js$/, 'html').replace(/\.\/src/, ''),
+                template: path.resolve(__dirname, '../src/page/layout.html' ),
                 chunks: [ name[1] ]
             }
         }

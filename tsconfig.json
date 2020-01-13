@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "lib": ["DOM"],
+        "target": "ES5",
+        "sourceMap": true
+    }
+}
