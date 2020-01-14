@@ -91,18 +91,19 @@ module.exports = config
 
 function getEntries() {
     const root = path.resolve(__dirname, '../src/page');
-    const r = glob.sync('./**/*.entry.js', {
-        root
+    const r = glob.sync('./**/main.js', {
+        cwd :root
     })
+    console.log(r)
 
     return r.map(p => {
-        let name = /([^\/]+)\.entry.js/.exec(p);
+        let name = /([^\/]+)\/main\.js/.exec(p);
         return {
             name: name[1],
-            entry: path.resolve(__dirname, '../', p),
+            entry: path.resolve(__dirname, '../src/page', p),
             page: {
                 // TODO title 自定义
-                filename: p.replace(/entry\.js$/, 'html').replace(/\.\/src/, '.'),
+                filename: path.resolve( __dirname, '../dist/page', p.replace(/js$/, 'html')),
                 template: path.resolve(__dirname, '../src/page/layout.html'),
                 chunks: [name[1]]
             }
