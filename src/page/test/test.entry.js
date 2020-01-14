@@ -1,7 +1,7 @@
 require('./test.scss')
-require('./test2.css')
+// require('./test2.css')
 
-import {name} from './sub';
+import {name, af} from './sub';
 
 console.log(name)
 
@@ -12,4 +12,10 @@ let s = require('./test.html');
 
 
 document.body.innerHTML = s;
-console.log(111)
+console.log(111);
+
+(async ()=>{
+    console.log('a');
+    let b = await af();
+    console.log('c')
+})()

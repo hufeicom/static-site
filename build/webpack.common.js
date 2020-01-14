@@ -3,21 +3,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
 
 let entries = getEntries()
+if(!entries.length){
+    throw(new ReferenceError(' can not find the entry file , please check page dir') )
+}
 
-let entry={}, pageFiles=[];
+let entry = {}, pageFiles = [];
 
-entries.forEach( v => {
+entries.forEach(v => {
     entry[v.name] = v.entry;
-    pageFiles.push( new HtmlWebpackPlugin( v.page ))
+    pageFiles.push(new HtmlWebpackPlugin(v.page))
 })
 
+const STATIC_PATH = "http://localhost:9000"
 
 const config = {
     entry,
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].bundle.js',
-        publicPath: "http://localhost:9000"
+        publicPath: STATIC_PATH
     },
 
     module: {
@@ -25,12 +29,7 @@ const config = {
             {
                 test: /\.tsx?$/,
                 exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'ts-loader',
-                    options: {
-                        // appendsuffix
-                    }
-                }
+                use: ['ts-loader']
             },
             // {
             //     test: /\.m?js$/,
@@ -48,7 +47,15 @@ const config = {
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"]
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            outputPath: "assets/",
+                            publicPath:  `${STATIC_PATH}/assets`,
+                            esModule: false
+                        }
+                    }, "css-loader"]
             },
             {
                 test: /\.(html)$/,
@@ -56,7 +63,7 @@ const config = {
                     {
                         loader: 'html-loader',
                         options: {
-                            attrs: ['img:src'],
+                            attrs: ['img:src', 'link:href'],
                         }
                     }
                 ]
@@ -69,7 +76,7 @@ const config = {
                         options: {
                             limit: 2048,
                             outputPath: "assets/",
-                            publicPath: "/assets",
+                            publicPath: `${STATIC_PATH}/assets`,
                             esModule: false
                         }
                     }
@@ -80,25 +87,24 @@ const config = {
     plugins: [].concat(pageFiles)
 }
 
-module.exports=config
+module.exports = config
 
 function getEntries() {
     const root = path.resolve(__dirname, '../src/page');
     const r = glob.sync('./**/*.entry.js', {
         root
     })
-    console.log(r);
-    return r.map(p => {
-       
-        let name = /([^\/]+)\.entry.js/.exec(p);
 
+    return r.map(p => {
+        let name = /([^\/]+)\.entry.js/.exec(p);
         return {
             name: name[1],
-            entry: path.resolve(__dirname, '../',p),
+            entry: path.resolve(__dirname, '../', p),
             page: {
-                filename: p.replace(/entry\.js$/, 'html').replace(/\.\/src/, ''),
-                template: path.resolve(__dirname, '../src/page/layout.html' ),
-                chunks: [ name[1] ]
+                // TODO title 自定义
+                filename: p.replace(/entry\.js$/, 'html').replace(/\.\/src/, '.'),
+                template: path.resolve(__dirname, '../src/page/layout.html'),
+                chunks: [name[1]]
             }
         }
     })
