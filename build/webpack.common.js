@@ -3,19 +3,22 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries") 
 
-const extractCSS = new ExtractTextPlugin('assets/[name].css');
-const extractSCSS = new ExtractTextPlugin('assets/[name].css');
+const extractCSS = new ExtractTextPlugin('assets/[name]_[hash:7].css')
+const extractSCSS = new ExtractTextPlugin('assets/[name]_[hash:7].css')
+
+const commonEntry = {
+    reset: "./src/components/common/reset.css",
+    theme: "./src/components/common/theme.scss"
+}
 
 let entries = getEntries()
 if(!entries.length){
     throw(new ReferenceError(' can not find the entry file , please check page dir') )
 }
 
-let entry = {
-    commonStyle: "./src/components/common/reset.css",
-    theme: "./src/components/common/theme.scss"
-}, pageFiles = [];
+let entry = Object.assign({}, commonEntry ), pageFiles = [];
 
 entries.forEach(v => {
     entry[v.name] = v.entry;
@@ -87,7 +90,7 @@ const config = {
             }
         ]
     },
-    plugins: [ extractSCSS, extractCSS ].concat(pageFiles).concat([
+    plugins: [ new FixStyleOnlyEntriesPlugin(), extractSCSS, extractCSS ].concat(pageFiles).concat([
         new webpack.ProvidePlugin({
             GlobalPage:  path.resolve(__dirname, '../src/page/layout.js'),
           }),
@@ -120,7 +123,7 @@ function getEntries() {
                 // TODO title 自定义
                 filename: path.resolve( __dirname, '../dist/page', filename),
                 template: path.resolve(__dirname, '../src/page/layout.html'),
-                chunks: ['commonStyle', 'theme', name[1]]
+                chunks: Object.keys(commonEntry).concat([ name[1]])
             }
         }
     })
