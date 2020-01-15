@@ -1,5 +1,4 @@
-require('./test.scss')
-// require('./test2.css')
+require('./index.scss')
 
 import {name, af} from './sub';
 
@@ -8,10 +7,6 @@ console.log(name)
 console.log('loaded!!!!!')
 
 
-let s = require('./test.html');
-
-
-document.body.innerHTML = s;
 console.log(111);
 
 (async ()=>{
@@ -19,3 +14,7 @@ console.log(111);
     let b = await af();
     console.log('c')
 })()
+
+console.log($vv,$vv1)
+// $globalPage.innerHTML = require('./index.html')
+

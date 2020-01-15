@@ -1,13 +1,21 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+
+const extractCSS = new ExtractTextPlugin('assets/[name].css');
+const extractSCSS = new ExtractTextPlugin('assets/[name].css');
 
 let entries = getEntries()
 if(!entries.length){
     throw(new ReferenceError(' can not find the entry file , please check page dir') )
 }
 
-let entry = {}, pageFiles = [];
+let entry = {
+    commonStyle: "./src/components/common/reset.css",
+    theme: "./src/components/common/theme.scss"
+}, pageFiles = [];
 
 entries.forEach(v => {
     entry[v.name] = v.entry;
@@ -20,7 +28,7 @@ const config = {
     entry,
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: '[name].bundle.js',
+        filename: '[name]_[hash:7].js',
         publicPath: STATIC_PATH
     },
 
@@ -43,19 +51,13 @@ const config = {
             // },
             {
                 test: /\.scss$/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                use: extractSCSS.extract({ fallback: "style-loader", use: [ "css-loader", "sass-loader" ]})
             },
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            outputPath: "assets/",
-                            publicPath:  `${STATIC_PATH}/assets`,
-                            esModule: false
-                        }
-                    }, "css-loader"]
+                use: extractCSS.extract({
+                    use: ['css-loader'],
+                  })
             },
             {
                 test: /\.(html)$/,
@@ -74,6 +76,7 @@ const config = {
                     {
                         loader: 'url-loader',
                         options: {
+                            name:'[name]_[hash:7].[ext]',
                             limit: 2048,
                             outputPath: "assets/",
                             publicPath: `${STATIC_PATH}/assets`,
@@ -84,28 +87,37 @@ const config = {
             }
         ]
     },
-    plugins: [].concat(pageFiles)
+    plugins: [ extractSCSS, extractCSS ].concat(pageFiles),
+    resolve: {
+        alias: {
+            '$vv1': './src/page/layout.js',  // 一个全局变量
+            '$vv': '../src/page/layout.js'  // 一个全局变量
+        }
+    }
+    
 }
 
 module.exports = config
 
 function getEntries() {
     const root = path.resolve(__dirname, '../src/page');
-    const r = glob.sync('./**/main.js', {
-        cwd :root
+    const r = glob.sync('./**/index.js', {
+        cwd: root
     })
-    console.log(r)
+    console.log("Entry list: \n", r)
 
     return r.map(p => {
-        let name = /([^\/]+)\/main\.js/.exec(p);
+        let name = /([^\/]+)\/index\.js/g.exec(p)
+        let filename = p.replace(/\/index\.js/g, '.html')
+        
         return {
             name: name[1],
             entry: path.resolve(__dirname, '../src/page', p),
             page: {
                 // TODO title 自定义
-                filename: path.resolve( __dirname, '../dist/page', p.replace(/js$/, 'html')),
+                filename: path.resolve( __dirname, '../dist/page', filename),
                 template: path.resolve(__dirname, '../src/page/layout.html'),
-                chunks: [name[1]]
+                chunks: ['commonStyle', 'theme', name[1]]
             }
         }
     })
