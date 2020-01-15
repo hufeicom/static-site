@@ -87,11 +87,14 @@ const config = {
             }
         ]
     },
-    plugins: [ extractSCSS, extractCSS ].concat(pageFiles),
+    plugins: [ extractSCSS, extractCSS ].concat(pageFiles).concat([
+        new webpack.ProvidePlugin({
+            GlobalPage:  path.resolve(__dirname, '../src/page/layout.js'),
+          }),
+    ]),
     resolve: {
         alias: {
-            '$vv1': './src/page/layout.js',  // 一个全局变量
-            '$vv': '../src/page/layout.js'  // 一个全局变量
+            "@": path.resolve(__dirname, '../src'),  // 一个全局变量
         }
     }
     

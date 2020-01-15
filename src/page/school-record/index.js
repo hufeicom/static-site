@@ -1,0 +1,1 @@
+GlobalPage.innerHTML = require('./index.html')

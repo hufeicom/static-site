@@ -1,4 +1,5 @@
 require('./index.scss')
+require('./test.scss')
 
 import {name, af} from './sub';
 
@@ -15,6 +16,6 @@ console.log(111);
     console.log('c')
 })()
 
-console.log($vv,$vv1)
-// $globalPage.innerHTML = require('./index.html')
+console.log(GlobalPage)
+GlobalPage.innerHTML = require('./index.html')
 
