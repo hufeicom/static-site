@@ -1,5 +1,15 @@
+// 字体
+$font-family: "Microsoft YaHei", "\u5b8b\u4f53",arial, helvetica, sans-serif, tahoma;
+// 常规大小
+$font-normal:14px;
+
 html,body{
     height: 100%;
 }
+
+body {
+    font: #{$font-normal}/26px #{$font-family};
+    color: black;
+} 
 
 @import "./style/button.scss";

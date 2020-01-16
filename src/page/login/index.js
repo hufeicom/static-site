@@ -1,5 +1,5 @@
 require('./index.scss')
-require('./test.scss')
+require('./another.scss')
 
 import {name, af} from './sub';
 
@@ -13,9 +13,14 @@ console.log(111);
 (async ()=>{
     console.log('a');
     let b = await af();
+    console.log(`value b is : ${b}`)
     console.log('c')
 })()
 
 console.log(GlobalPage)
-GlobalPage.innerHTML = require('./index.html')
+GlobalPage.render(require('./index.html'))
+GlobalPage.setTitle('Good')
 
+
+console.log(jQuery)
+console.log($.fn === jQuery.fn, $.fn)

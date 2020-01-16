@@ -92,7 +92,9 @@ const config = {
     },
     plugins: [ new FixStyleOnlyEntriesPlugin(), extractSCSS, extractCSS ].concat(pageFiles).concat([
         new webpack.ProvidePlugin({
-            GlobalPage:  path.resolve(__dirname, '../src/page/layout.js'),
+            GlobalPage:  path.resolve(__dirname, '../src/page/layout/layout.ts'),
+            $:  require.resolve('jquery'),
+            jQuery:  require.resolve('jquery')
           }),
     ]),
     resolve: {
@@ -122,7 +124,7 @@ function getEntries() {
             page: {
                 // TODO title 自定义
                 filename: path.resolve( __dirname, '../dist/page', filename),
-                template: path.resolve(__dirname, '../src/page/layout.html'),
+                template: path.resolve(__dirname, '../src/page/layout/layout.html'),
                 chunks: Object.keys(commonEntry).concat([ name[1]])
             }
         }
