@@ -1,0 +1,32 @@
+.wgt-error-tip {
+	color: #666666;
+	text-align: center;
+
+	.error-img {
+		display: inline-block;
+		width: 180px;
+		height: 160px;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.nocontent {
+		background-image: url("./imgs/nocontent.png");
+	}
+	.offline {
+		background-image: url("./imgs/offline.png");
+	}
+	.timeerror {
+		background-image: url("./imgs/timeerror.png");
+	}
+	@media (min-resolution: 150dpi) {
+		.nocontent {
+			background-image: url("./imgs/nocontent@1.5x.png");
+		}
+		.offline {
+			background-image: url("./imgs/offline@1.5x.png");
+		}
+		.timeerror {
+			background-image: url("./imgs/timeerror@1.5x.png");
+		}
+	}
+}

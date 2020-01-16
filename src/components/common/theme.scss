@@ -1,14 +1,14 @@
 // 字体
 $font-family: "Microsoft YaHei", "\u5b8b\u4f53",arial, helvetica, sans-serif, tahoma;
 // 常规大小
-$font-normal:14px;
+$font-normal:1rem;
 
 html,body{
     height: 100%;
 }
 
 body {
-    font: #{$font-normal}/26px #{$font-family};
+    font: #{$font-normal}/1.857rem #{$font-family};
     color: black;
 } 
 

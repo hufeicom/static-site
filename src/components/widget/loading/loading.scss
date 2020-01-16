@@ -1,0 +1,67 @@
+.wgt-loading {
+	.ico-loading {
+		display: inline-block;
+		width: 70px;
+		height: 70px;
+		background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("./imgs/loding1@1x.png");
+		animation: loading 0.5s infinite;
+		-webkit-animation: loading .5s infinite; /* Safari 和 Chrome */
+	}
+
+	@keyframes loading {
+		0% {
+			background-image: url("./imgs/loding1@1x.png");
+		}
+		12.5% {
+			background-image: url("./imgs/loding2@1x.png");
+		}
+		25% {
+			background-image: url("./imgs/loding3@1x.png");
+		}
+		37.5% {
+			background-image: url("./imgs/loding4@1x.png");
+		}
+		50% {
+			background-image: url("./imgs/loding5@1x.png");
+		}
+		62.5% {
+			background-image: url("./imgs/loding6@1x.png");
+		}
+		75% {
+			background-image: url("./imgs/loding7@1x.png");
+		}
+		87.5% {
+			background-image: url("./imgs/loding8@1x.png");
+		}
+    }
+    @media (min-resolution: 150dpi) {
+		@keyframes loading {
+            0% {
+                background-image: url("./imgs/loding1@1.5x.png");
+            }
+            12.5% {
+                background-image: url("./imgs/loding2@1.5x.png");
+            }
+            25% {
+                background-image: url("./imgs/loding3@1.5x.png");
+            }
+            37.5% {
+                background-image: url("./imgs/loding4@1.5x.png");
+            }
+            50% {
+                background-image: url("./imgs/loding5@1.5x.png");
+            }
+            62.5% {
+                background-image: url("./imgs/loding6@1.5x.png");
+            }
+            75% {
+                background-image: url("./imgs/loding7@1.5x.png");
+            }
+            87.5% {
+                background-image: url("./imgs/loding8@1.5x.png");
+            }
+        }
+	}
+}
