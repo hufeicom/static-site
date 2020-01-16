@@ -2,8 +2,17 @@
     cursor: pointer;
     display: inline-block;
     text-align: center;
-    border: 1px solid transparent;
+    border: 1px solid #C8C8C8;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 1rem;
+    font-weight: normal;
     text-decoration: none;
+    padding: 0.5rem;
+    min-width: 10rem;
+    border-radius: 0.2rem;
+
+    &.active, &:hover{
+        color: #0099FF;
+        border-color: #0099FF;
+    }
 }

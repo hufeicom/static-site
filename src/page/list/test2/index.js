@@ -1,5 +1,8 @@
+import "./index.scss"
+
 import Empty from '@/components/widget/empty/empty.ts'
 import {Loading} from "@/components/widget/loading/loading.ts"
+import { Toast} from "@/components/widget/toast/toast.ts"
 
 GlobalPage.render(require('./index.html'))
 
@@ -31,4 +34,8 @@ setTimeout(()=>{
     Loading.hide(loadingBox)
 }, 4000)
 
-
+Toast('There is a  callback', {
+    callback: function (params) {
+        Toast('no callback')
+    }
+})

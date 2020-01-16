@@ -1,4 +1,12 @@
-module.exports = function(string, options) {
+export interface OPTION {
+    delay?: number,
+    backgroundColor?: string,
+    fontSize?: string,
+    borderRadius?: string,
+    callback?: ()=>{}
+}
+
+export const Toast = (string, options:OPTION):void=>{
     options = Object.assign({
         delay:2e3
     }, options);

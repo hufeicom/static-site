@@ -4,13 +4,13 @@
 	"description": "一些静态页面",
 	"main": "index.js",
 	"scripts": {
-		"clean"	: "rimraf dist",
-		"start"	: "webpack-dev-server --open --config build/webpack.dev.js",
-		"dev"	: "npm run clean && webpack --config build/webpack.dev.js",
-		"push"	: "npm run dev && node ./build/deploy.js",
-		"watch"	: "webpack --watch",
-		"build"	: "npm run clean && webpack --config build/webpack.prod.js",
-		"test"	: "echo \"Error: no test specified\" && exit 1"
+		"clean": "rimraf dist",
+		"start": "webpack-dev-server --open --config build/webpack.dev.js",
+		"dev": "npm run clean && webpack --config build/webpack.dev.js",
+		"push": "npm run dev && node ./build/deploy.js",
+		"watch": "webpack --watch",
+		"build": "npm run clean && webpack --config build/webpack.prod.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
@@ -20,6 +20,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@types/jquery": "^3.3.31",
 		"@types/node": "^13.1.6",
 		"jquery": "^3.4.1"
 	},
