@@ -1,0 +1,32 @@
+@keyframes show1 {
+    from{
+        transform: translateY(0);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-25px);
+        opacity: 1;
+    }
+}
+
+@keyframes hide1 {
+    from{
+        transform: translateY(-25px);
+        opacity: 1; 
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0;
+    }
+}
+
+.wgt-toast {
+    &.show {
+        animation: show1 .2s ease-in;
+        opacity: 1;
+        transform: translateY(-25px);
+    }
+    &.hide{
+        animation: hide1 .2s ease-in;
+    }
+}

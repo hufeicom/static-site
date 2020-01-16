@@ -1,3 +1,4 @@
+import './toast.scss'
 export interface OPTION {
     delay?: number,
     backgroundColor?: string,
@@ -6,42 +7,38 @@ export interface OPTION {
     callback?: ()=>{}
 }
 
-export const Toast = (string, options:OPTION):void=>{
-    options = Object.assign({
-        delay:2e3
-    }, options);
 
-    $("#pop-layer-box").remove();
-    var elem = $("<div />").prop({
-            id: "pop-layer-box"
-        }).css({
-            "position"        : "absolute",
-            "z-index"         : "9999",
-            "background-color": options.backgroundColor || "#45494d",
-            "color"           : "#fff",
-            "font-size"       : options.fontSize || "12px",
-            "padding"         : "15px 30px",
-            "border-radius"   : options.borderRadius || "3px"
-        }).html( string ).appendTo(document.body),
-        top  = $(window).height() / 2 + $(window).scrollTop() - 130,
-        left = ($(window).width() - elem.width() - 60) / 2;
+export const Toast = (string, option:OPTION):void=>{
+    let options = Object.assign({
+        delay:2e3
+    }, option);
+    let toast = document.createElement('div');
+    toast.className = 'wgt-toast'
+    toast.setAttribute('style', `position:absolute; z-index: 9999; color: #fff; padding: 15px 30px; 
+    background-color: ${options.backgroundColor|| "#45494d"};
+    font-size: ${options.fontSize|| "12px"};
+    border-radius: ${options.borderRadius|| "3px"};
+    `)
+    toast.innerHTML = string;
+    document.body.appendChild(toast);
+
+    let top = window.innerHeight / 2 + window.scrollY - 130,
+    left = (window.innerWidth - ~~(window.getComputedStyle(toast))['width'] - 60 ) / 2;
+
     top  = top > 50 ? top : 50;
     left = left >= 0 ? left : 0;
-    elem.css({
-        left   : left + "px",
-        top    : top + "px",
-        opacity: 0
-    }).animate({
-        top: top - 25,
-        opacity: 1
-    }, 200);
-    setTimeout(function() {
-        elem.animate({
-            top: top,
-            opacity: 0
-        }, 200, function() {
-            elem.remove();
-            options.callback && options.callback();
-        });
-    }, options.delay);
-};
+
+    toast.style.left = `${left}px`
+    toast.style.top = `${top}px`
+
+    toast.className += ' show'
+
+    setTimeout(()=>{
+        toast.className = toast.className.replace('show', 'hide')
+        setTimeout(()=>{
+            document.body.removeChild(toast);
+            toast = null;
+            options.callback && options.callback()
+        }, 200)
+    }, options.delay)
+}

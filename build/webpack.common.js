@@ -3,7 +3,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries") 
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries")
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const extractCSS = new ExtractTextPlugin('assets/[name]_[hash:7].css')
 const extractSCSS = new ExtractTextPlugin('assets/[name]_[hash:7].css')
@@ -14,11 +15,11 @@ const commonEntry = {
 }
 
 let entries = getEntries()
-if(!entries.length){
-    throw(new ReferenceError(' can not find the entry file , please check page dir') )
+if (!entries.length) {
+    throw (new ReferenceError(' can not find the entry file , please check page dir'))
 }
 
-let entry = Object.assign({}, commonEntry ), pageFiles = [];
+let entry = Object.assign({}, commonEntry), pageFiles = [];
 
 entries.forEach(v => {
     entry[v.name] = v.entry;
@@ -54,13 +55,13 @@ const config = {
             // },
             {
                 test: /\.scss$/,
-                use: extractSCSS.extract({ fallback: "style-loader", use: [ "css-loader", "sass-loader" ]})
+                use: extractSCSS.extract({ fallback: "style-loader", use: ["css-loader", "sass-loader"] })
             },
             {
                 test: /\.css$/,
                 use: extractCSS.extract({
                     use: ['css-loader'],
-                  })
+                })
             },
             {
                 test: /\.(html)$/,
@@ -79,7 +80,7 @@ const config = {
                     {
                         loader: 'url-loader',
                         options: {
-                            name:'[name]_[hash:7].[ext]',
+                            name: '[name]_[hash:7].[ext]',
                             limit: 2048,
                             outputPath: "assets/",
                             publicPath: `${STATIC_PATH}/assets`,
@@ -90,19 +91,25 @@ const config = {
             }
         ]
     },
-    plugins: [ new FixStyleOnlyEntriesPlugin(), extractSCSS, extractCSS ].concat(pageFiles).concat([
+    plugins: [ 
+        new BundleAnalyzerPlugin(), 
+        new FixStyleOnlyEntriesPlugin(), extractSCSS, extractCSS].concat(pageFiles).concat([
         new webpack.ProvidePlugin({
-            GlobalPage:  path.resolve(__dirname, '../src/page/layout/layout.ts'),
-            $:  require.resolve('jquery'),
-            jQuery:  require.resolve('jquery')
-          }),
+            GlobalPage: path.resolve(__dirname, '../src/page/layout/layout.ts')
+            // $: require.resolve('zepto'),
+            // jQuery: require.resolve('zepto')
+        }),
     ]),
     resolve: {
         alias: {
             "@": path.resolve(__dirname, '../src'),  // 一个全局变量
         }
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'initial'
+        }
     }
-    
 }
 
 module.exports = config
@@ -117,15 +124,15 @@ function getEntries() {
     return r.map(p => {
         let name = /([^\/]+)\/index\.js/g.exec(p)
         let filename = p.replace(/\/index\.js/g, '.html')
-        
+
         return {
             name: name[1],
             entry: path.resolve(__dirname, '../src/page', p),
             page: {
                 // TODO title 自定义
-                filename: path.resolve( __dirname, '../dist/page', filename),
+                filename: path.resolve(__dirname, '../dist/page', filename),
                 template: path.resolve(__dirname, '../src/page/layout/layout.html'),
-                chunks: Object.keys(commonEntry).concat([ name[1]])
+                chunks: Object.keys(commonEntry).concat([name[1]])
             }
         }
     })

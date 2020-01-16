@@ -34,6 +34,7 @@ setTimeout(()=>{
     Loading.hide(loadingBox)
 }, 4000)
 
+
 Toast('There is a  callback', {
     callback: function (params) {
         Toast('no callback')

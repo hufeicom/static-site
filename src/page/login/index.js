@@ -3,6 +3,10 @@ require('./another.scss')
 
 import {name, af} from './sub';
 
+import Empty from '@/components/widget/empty/empty'
+
+new Empty(document.body)
+
 console.log(name)
 
 console.log('loaded!!!!!')
@@ -20,7 +24,3 @@ console.log(111);
 console.log(GlobalPage)
 GlobalPage.render(require('./index.html'))
 GlobalPage.setTitle('Good')
-
-
-console.log(jQuery)
-console.log($.fn === jQuery.fn, $.fn)
