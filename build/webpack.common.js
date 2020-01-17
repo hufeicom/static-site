@@ -92,7 +92,7 @@ const config = {
         ]
     },
     plugins: [ 
-        new BundleAnalyzerPlugin(), 
+        // new BundleAnalyzerPlugin(),
         new FixStyleOnlyEntriesPlugin(), extractSCSS, extractCSS].concat(pageFiles).concat([
         new webpack.ProvidePlugin({
             GlobalPage: path.resolve(__dirname, '../src/page/layout/layout.ts')
@@ -107,7 +107,16 @@ const config = {
     },
     optimization: {
         splitChunks: {
-            chunks: 'initial'
+            chunks: "initial",
+            cacheGroups: {
+                commons: {
+                    name: "chunk-comomns",
+                    test: path.resolve(__dirname, "../src/components"), // 可自定义拓展你的规则
+                    minChunks: 2, // 最小共用次数
+                    priority: 0,
+                    reuseExistingChunk: true
+                }
+            }
         }
     }
 }
@@ -132,7 +141,7 @@ function getEntries() {
                 // TODO title 自定义
                 filename: path.resolve(__dirname, '../dist/page', filename),
                 template: path.resolve(__dirname, '../src/page/layout/layout.html'),
-                chunks: Object.keys(commonEntry).concat([name[1]])
+                chunks: Object.keys(commonEntry).concat(['chunk-comomns', name[1]])
             }
         }
     })

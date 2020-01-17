@@ -3,7 +3,7 @@ require('./another.scss')
 
 import {name, af} from './sub';
 
-import Empty from '@/components/widget/empty/empty'
+import Empty from '@/components/widget/empty/empty.ts'
 
 new Empty(document.body)
 
