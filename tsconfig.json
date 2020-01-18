@@ -3,9 +3,12 @@
         "allowJs": true,
         "lib": ["DOM"],
         "target": "ES5",
-        "sourceMap": true
+        // "sourceMap": true,
+        "baseUrl": "./",
+        "paths": { 
+            "@/*": [ "./src/*" ]
+        } 
     },
-    "exclude": [
-        "node_modules", "public", "js"
-    ]
+    "include": ["src"],
+    "exclude": ["node_modules", "dist", "build"]
 }

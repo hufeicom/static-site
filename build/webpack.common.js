@@ -95,7 +95,7 @@ const config = {
         // new BundleAnalyzerPlugin(),
         new FixStyleOnlyEntriesPlugin(), extractSCSS, extractCSS].concat(pageFiles).concat([
         new webpack.ProvidePlugin({
-            GlobalPage: path.resolve(__dirname, '../src/page/layout/layout.ts')
+            GP: path.resolve(__dirname, '../src/page/layout/layout.ts')
             // $: require.resolve('zepto'),
             // jQuery: require.resolve('zepto')
         }),
@@ -103,7 +103,9 @@ const config = {
     resolve: {
         alias: {
             "@": path.resolve(__dirname, '../src'),  // 一个全局变量
-        }
+        },
+        extensions: [".tsx", ".ts", ".js", ".jsx"],
+        modules: ["node_modules"]
     },
     optimization: {
         splitChunks: {
@@ -125,14 +127,14 @@ module.exports = config
 
 function getEntries() {
     const root = path.resolve(__dirname, '../src/page');
-    const r = glob.sync('./**/index.js', {
+    const r = glob.sync('./**/index.ts', {
         cwd: root
     })
     console.log("Entry list: \n", r)
 
     return r.map(p => {
-        let name = /([^\/]+)\/index\.js/g.exec(p)
-        let filename = p.replace(/\/index\.js/g, '.html')
+        let name = /([^\/]+)\/index\.ts/g.exec(p)
+        let filename = p.replace(/\/index\.ts/g, '.html')
 
         return {
             name: name[1],

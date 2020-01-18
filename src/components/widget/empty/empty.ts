@@ -1,6 +1,6 @@
 import './empty.scss'
 
-enum ErrorName {
+export enum ErrorName {
     NO_CONTENT="nocontent",
     TIMEERROR="timeerror",
     OFFLINE="offline"
@@ -36,7 +36,7 @@ export default class Empty {
         this.state = show;
         this.wrap.style.display = this.state ? 'block' : 'none'
     }
-    show( type:ErrorName ) {
+    show( type?:ErrorName ) {
         if( type ) this.render(type)
         this.toggle(true)
     }

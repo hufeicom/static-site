@@ -1,11 +1,7 @@
 import './layout.scss'
 
 const wrap = document.getElementById('app');
-const GlobalPage:{
-    render: <T>(str:string|HTMLElement)=>void;
-    setTitle: (title: string)=>void;
-} = {
-    
+GP = {
     render(str:string|HTMLElement){
         if(typeof str === 'string'){
             wrap.innerHTML = str;
@@ -18,4 +14,4 @@ const GlobalPage:{
     }
 }
 
-module.exports = GlobalPage;
+module.exports = GP;

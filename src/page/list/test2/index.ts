@@ -1,26 +1,26 @@
 import "./index.scss"
 
-import Empty from '@/components/widget/empty/empty.ts'
-import {Loading} from "@/components/widget/loading/loading.ts"
-import { Toast} from "@/components/widget/toast/toast.ts"
+import Empty, {ErrorName} from '@/components/widget/empty/empty'
+import {Loading} from "@/components/widget/loading/loading"
+import { Toast} from "@/components/widget/toast/toast"
 
-GlobalPage.render(require('./index.html'))
+GP.render(require('./index.html'))
 
 const target = document.getElementById('test2')
 let emptyBox = target.querySelector('.empty')
-let loadingBox = target.querySelector('.loading')
+let loadingBox:HTMLElement = target.querySelector('.loading')
 
 let empty = new Empty(emptyBox)
 
 empty.show()
 
-empty.render('offline')
+empty.render(ErrorName.OFFLINE)
 empty.show()
 
 setTimeout(()=>{
-    empty.render('timeerror')
+    empty.render(ErrorName.TIMEERROR)
     setTimeout(()=>{
-        empty.render('nocontent')
+        empty.render(ErrorName.NO_CONTENT)
         setTimeout(()=>{
             empty.hide()            
         }, 3500)
@@ -36,7 +36,7 @@ setTimeout(()=>{
 
 
 Toast('There is a  callback', {
-    callback: function (params) {
+    callback: function () {
         Toast('no callback')
     }
 })

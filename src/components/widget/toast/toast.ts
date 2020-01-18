@@ -4,11 +4,11 @@ export interface OPTION {
     backgroundColor?: string,
     fontSize?: string,
     borderRadius?: string,
-    callback?: ()=>{}
+    callback?: Function
 }
 
 
-export const Toast = (string, option:OPTION):void=>{
+export const Toast = (string, option?:OPTION):void=>{
     let options = Object.assign({
         delay:2e3
     }, option);
