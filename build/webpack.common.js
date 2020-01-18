@@ -40,8 +40,9 @@ const config = {
         rules: [
             {
                 test: /\.tsx?$/,
+                enforce: 'pre',
                 exclude: /(node_modules|bower_components)/,
-                use: ['ts-loader']
+                use: ['ts-loader', /*'tslint-loader' */]
             },
             // {
             //     test: /\.m?js$/,

@@ -1,8 +1,8 @@
-import "./index.scss"
+import './index.scss'
 
 import Empty, {ErrorName} from '@/components/widget/empty/empty'
-import {Loading} from "@/components/widget/loading/loading"
-import { Toast} from "@/components/widget/toast/toast"
+import {Loading} from '@/components/widget/loading/loading'
+import { Toast} from '@/components/widget/toast/toast'
 
 GP.render(require('./index.html'))
 

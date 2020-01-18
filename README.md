@@ -25,9 +25,18 @@
 关于项目的一些说明：
 
 1. page目录下存放每个页面的入口文件，文件名以`index.js`结尾， 入口文件不推荐写过重的业务的逻辑（代码行数不超过50~100行）
-2. 每个模块中都注入了变量GlobalPage， GlobalPage的定义在`src/page/layout.js`中
-3. jQuery被注入全局当中
+2. 每个模块中都注入了变量 `GP`， `GP`的实现在`src/page/layout.js`中
+3. ~~jQuery被注入全局当中~~
 
 
 ## TODO
-- [x]  config title, 解决方法 ：提供方法 `GlobalPage.setTitle(str)`
+- [x]  config title, 解决方法 ：提供方法 `GP.setTitle(str)`
+- [x]  axios
+- [-]  typescript
+    - [ ] type definition file
+    - [-] tslint
+- [-]  mockjs
+- [ ]  loading
+- [ ]  button
+- [ ]  page base style
+- [ ]  jsBridge center

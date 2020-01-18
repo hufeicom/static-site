@@ -4,26 +4,26 @@ export interface OPTION {
     backgroundColor?: string,
     fontSize?: string,
     borderRadius?: string,
-    callback?: Function
+    callback?: ()=>void
 }
 
 
 export const Toast = (string, option?:OPTION):void=>{
-    let options = Object.assign({
+    const options = Object.assign({
         delay:2e3
     }, option);
     let toast = document.createElement('div');
     toast.className = 'wgt-toast'
     toast.setAttribute('style', `position:absolute; z-index: 9999; color: #fff; padding: 15px 30px; 
-    background-color: ${options.backgroundColor|| "#45494d"};
-    font-size: ${options.fontSize|| "12px"};
-    border-radius: ${options.borderRadius|| "3px"};
+    background-color: ${options.backgroundColor|| '#45494d'};
+    font-size: ${options.fontSize|| '12px'};
+    border-radius: ${options.borderRadius|| '3px'};
     `)
     toast.innerHTML = string;
     document.body.appendChild(toast);
 
-    let top = window.innerHeight / 2 + window.scrollY - 130,
-    left = (window.innerWidth - ~~(window.getComputedStyle(toast))['width'] - 60 ) / 2;
+    let top = window.innerHeight / 2 + window.scrollY - 130;
+    let left = (window.innerWidth - ~~(window.getComputedStyle(toast))['width'] - 60 ) / 2;
 
     top  = top > 50 ? top : 50;
     left = left >= 0 ? left : 0;

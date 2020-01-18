@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
         "allowJs": true,
-        "lib": ["DOM"],
+        "lib": ["DOM","es5",
+            "es6",
+            "es7",
+            "es2015.promise"],
         "target": "ES5",
         // "sourceMap": true,
         "baseUrl": "./",
