@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
+        "strictNullChecks": false,
         "allowJs": true,
         "lib": ["DOM","es5",
             "es6",
             "es7",
             "es2015.promise"],
         "target": "ES5",
+        "module": "CommonJS",
         // "sourceMap": true,
-        "baseUrl": "./",
+        "baseUrl": "./", 
         "paths": { 
             "@/*": [ "./src/*" ]
         } 

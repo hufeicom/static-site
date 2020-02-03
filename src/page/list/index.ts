@@ -21,3 +21,6 @@ console.log(ArrayBuffer.isView( i32a))
 
 const l = console.log;
 l(i32b)
+
+
+GP = {render(){}, setTitle(){}}

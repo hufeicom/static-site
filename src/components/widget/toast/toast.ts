@@ -42,3 +42,7 @@ export const Toast = (string, option?:OPTION):void=>{
         }, 200)
     }, options.delay)
 }
+
+
+type Fn = (a: string, b: number) => void
+type FnParams = Parameters<Fn>

@@ -1,7 +1,7 @@
 import './layout.scss'
 
 const wrap = document.getElementById('app');
-GP = {
+const GP = {
     render(str:string|HTMLElement){
         if(typeof str === 'string'){
             wrap.innerHTML = str;
